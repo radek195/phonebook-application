@@ -1,6 +1,5 @@
 package common
 
-
 import org.example.domain.contact.ContactDto
 import org.example.domain.user.UserDto
 
