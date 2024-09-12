@@ -2,7 +2,6 @@ package org.example.infrastructure.dao;
 
 import lombok.RequiredArgsConstructor;
 import org.example.domain.contact.ContactDto;
-import org.example.domain.user.UserDto;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
