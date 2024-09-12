@@ -1,28 +1,52 @@
 package common
 
+
+import org.example.domain.contact.ContactDto
 import org.example.domain.user.UserDto
 
 trait DataHelper {
 
     UserDto getUserOne() {
-        new UserDto(
-                1,
-                "Mathias",
-                "Perry",
-                "m.perry@yahoo.com",
-                "perrym",
-                "M4th1a5"
-        )
+        UserDto.builder()
+                .id(1)
+                .name("Mathias")
+                .surname("Perry")
+                .email("m.perry@yahoo.com")
+                .username("perrym")
+                .password("M4th1a5")
+                .build()
     }
 
     UserDto getUserTwo() {
-        new UserDto(
-                2,
-                "Thomas",
-                "Knight",
-                "t.knight@gmail.com",
-                "teenight",
-                "kn1ght!"
-        )
+        UserDto.builder()
+                .id(2)
+                .name("Thomas")
+                .surname("Knight")
+                .email("t.knight@gmail.com")
+                .username("teenight")
+                .password("kn1ght!")
+                .build()
+    }
+
+    ContactDto getContactOne() {
+        ContactDto.builder()
+                .id(1)
+                .name("Anthony")
+                .surname("Smith")
+                .email("a.smith@gmail.com")
+                .phoneNumber("+55787626154")
+                .description("friend")
+                .build()
+    }
+
+    ContactDto getContactTwo() {
+        ContactDto.builder()
+                .id(2)
+                .name("Alicia")
+                .surname("Brown")
+                .email("a.brown@gmail.com")
+                .phoneNumber("+53989606412")
+                .description("mom")
+                .build()
     }
 }
