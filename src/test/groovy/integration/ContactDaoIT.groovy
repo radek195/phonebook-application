@@ -4,8 +4,8 @@ import common.DataHelper
 import common.DbHelper
 import org.example.domain.contact.ContactDto
 import org.example.domain.user.UserDto
-import org.example.infrastructure.dao.ContactDao
-import org.example.infrastructure.dao.DbConnection
+import org.example.infrastructure.contact.ContactDao
+import org.example.infrastructure.DbConnection
 import spock.lang.Specification
 
 class ContactDaoIT extends Specification implements DataHelper {

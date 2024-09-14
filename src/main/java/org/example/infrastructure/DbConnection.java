@@ -1,4 +1,4 @@
-package org.example.infrastructure.dao;
+package org.example.infrastructure;
 
 import java.sql.*;
 

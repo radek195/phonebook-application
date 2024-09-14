@@ -1,13 +1,14 @@
-package org.example.infrastructure.dao;
+package org.example.infrastructure.user;
 
 import lombok.RequiredArgsConstructor;
 import org.example.domain.user.UserDto;
+import org.example.infrastructure.DbConnection;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static org.example.infrastructure.dao.DbConnection.SCHEMA;
+import static org.example.infrastructure.DbConnection.SCHEMA;
 
 @RequiredArgsConstructor
 public class UserDao {

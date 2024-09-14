@@ -3,8 +3,8 @@ package integration
 import common.DataHelper
 import common.DbHelper
 import org.example.domain.user.UserDto
-import org.example.infrastructure.dao.DbConnection
-import org.example.infrastructure.dao.UserDao
+import org.example.infrastructure.DbConnection
+import org.example.infrastructure.user.UserDao
 import spock.lang.Specification
 
 class UserDaoIT extends Specification implements DataHelper {
