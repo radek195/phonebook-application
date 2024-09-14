@@ -2,6 +2,7 @@ package org.example.infrastructure.user;
 
 import lombok.RequiredArgsConstructor;
 import org.example.domain.user.UserDto;
+import org.example.infrastructure.Dao;
 import org.example.infrastructure.DbConnection;
 
 import java.sql.PreparedStatement;
@@ -11,10 +12,11 @@ import java.sql.SQLException;
 import static org.example.infrastructure.DbConnection.SCHEMA;
 
 @RequiredArgsConstructor
-public class UserDao {
+public class UserDao implements Dao<UserDto> {
 
     private final DbConnection dbConnection;
 
+    @Override
     public long save(UserDto userDto) throws SQLException {
         String query = String.format("INSERT INTO %s.USERS(name, surname, email, username, password) VALUES(?, ?, ?, ?, ?)",
                 SCHEMA);
@@ -34,6 +36,7 @@ public class UserDao {
         throw new RuntimeException("Could not get id of saved record.");
     }
 
+    @Override
     public UserDto get(long id) throws SQLException {
         String query = String.format("SELECT * FROM %s.USERS WHERE ID = ?", SCHEMA);
 
@@ -55,6 +58,7 @@ public class UserDao {
         return null;
     }
 
+    @Override
     public void update(long id, UserDto userDto) throws SQLException {
         String query = String.format("UPDATE %s.USERS SET name = ?, surname = ? , email = ?, username = ?, password = ? WHERE ID = ?",
                 SCHEMA);
@@ -70,6 +74,7 @@ public class UserDao {
         statement.executeUpdate();
     }
 
+    @Override
     public void delete(long id) throws SQLException {
         String query = String.format("DELETE FROM %s.USERS WHERE ID = ?",
                 SCHEMA);
