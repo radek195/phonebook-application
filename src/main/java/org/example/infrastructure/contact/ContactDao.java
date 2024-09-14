@@ -15,12 +15,12 @@ public class ContactDao {
 
     private final DbConnection dbConnection;
 
-    public long save(ContactDto contactDto, long usersId) throws SQLException {
+    public long save(ContactDto contactDto) throws SQLException {
         String query = String.format("INSERT INTO %s.CONTACTS(users_id, name, surname, email, phone_number, description) VALUES(?, ?, ?, ?, ?, ?)",
                 SCHEMA);
 
         PreparedStatement statement = dbConnection.createPreparedStatement(query);
-        statement.setLong(1, usersId);
+        statement.setLong(1, contactDto.users_id());
         statement.setString(2, contactDto.name());
         statement.setString(3, contactDto.surname());
         statement.setString(4, contactDto.email());
