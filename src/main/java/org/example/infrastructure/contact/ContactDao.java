@@ -35,7 +35,7 @@ public class ContactDao {
         throw new RuntimeException("Could not get id of saved record.");
     }
 
-    public ResultSet get(long id) throws SQLException {
+    public ContactDto get(long id) throws SQLException {
         String query = String.format("SELECT * FROM %s.CONTACTS WHERE ID = ?", SCHEMA);
 
         PreparedStatement statement = dbConnection.createPreparedStatement(query);
@@ -43,7 +43,18 @@ public class ContactDao {
 
         ResultSet resultSet = statement.executeQuery();
 
-        return resultSet.next() ? resultSet : null;
+        if (resultSet.next()) {
+            return ContactDto.builder()
+                    .id(resultSet.getLong("id"))
+                    .users_id(resultSet.getLong("users_id"))
+                    .name(resultSet.getString("name"))
+                    .surname(resultSet.getString("surname"))
+                    .email(resultSet.getString("email"))
+                    .phoneNumber(resultSet.getString("phone_number"))
+                    .description(resultSet.getString("description"))
+                    .build();
+        }
+        return null;
     }
 
     public void update(long id, ContactDto contactDto) throws SQLException {

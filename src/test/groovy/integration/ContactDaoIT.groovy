@@ -51,12 +51,12 @@ class ContactDaoIT extends Specification implements DataHelper {
             def retrievedContact = contactDao.get(contact.id())
 
         then:
-            retrievedContact.getString("users_id") == contact.users_id() as String
-            retrievedContact.getString("name") == contact.name()
-            retrievedContact.getString("surname") == contact.surname()
-            retrievedContact.getString("email") == contact.email()
-            retrievedContact.getString("phone_number") == contact.phoneNumber()
-            retrievedContact.getString("description") == contact.description()
+            retrievedContact.users_id() == contact.users_id()
+            retrievedContact.name() == contact.name()
+            retrievedContact.surname() == contact.surname()
+            retrievedContact.email() == contact.email()
+            retrievedContact.phoneNumber() == contact.phoneNumber()
+            retrievedContact.description() == contact.description()
     }
 
     def "should update saved contact"() {

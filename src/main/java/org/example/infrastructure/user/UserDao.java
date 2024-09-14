@@ -34,7 +34,7 @@ public class UserDao {
         throw new RuntimeException("Could not get id of saved record.");
     }
 
-    public ResultSet get(long id) throws SQLException {
+    public UserDto get(long id) throws SQLException {
         String query = String.format("SELECT * FROM %s.USERS WHERE ID = ?", SCHEMA);
 
         PreparedStatement statement = dbConnection.createPreparedStatement(query);
@@ -42,7 +42,17 @@ public class UserDao {
 
         ResultSet resultSet = statement.executeQuery();
 
-        return resultSet.next() ? resultSet : null;
+        if (resultSet.next()) {
+            return UserDto.builder()
+                    .id(resultSet.getLong("id"))
+                    .name(resultSet.getString("name"))
+                    .surname(resultSet.getString("surname"))
+                    .email(resultSet.getString("email"))
+                    .username(resultSet.getString("username"))
+                    .password(resultSet.getString("password"))
+                    .build();
+        }
+        return null;
     }
 
     public void update(long id, UserDto userDto) throws SQLException {
