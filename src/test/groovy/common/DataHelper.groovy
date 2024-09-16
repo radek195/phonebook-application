@@ -27,9 +27,10 @@ trait DataHelper {
                 .build()
     }
 
-    ContactDto getContactOne() {
+    ContactDto getContactOneFor(long userId) {
         ContactDto.builder()
                 .id(1)
+                .users_id(userId)
                 .name("Anthony")
                 .surname("Smith")
                 .email("a.smith@gmail.com")
@@ -38,9 +39,10 @@ trait DataHelper {
                 .build()
     }
 
-    ContactDto getContactTwo() {
+    ContactDto getContactTwoFor(long userId) {
         ContactDto.builder()
                 .id(2)
+                .users_id(userId)
                 .name("Alicia")
                 .surname("Brown")
                 .email("a.brown@gmail.com")

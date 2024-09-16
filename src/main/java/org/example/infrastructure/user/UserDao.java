@@ -1,19 +1,22 @@
-package org.example.infrastructure.dao;
+package org.example.infrastructure.user;
 
 import lombok.RequiredArgsConstructor;
 import org.example.domain.user.UserDto;
+import org.example.infrastructure.Dao;
+import org.example.infrastructure.DbConnection;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static org.example.infrastructure.dao.DbConnection.SCHEMA;
+import static org.example.infrastructure.DbConnection.SCHEMA;
 
 @RequiredArgsConstructor
-public class UserDao {
+public class UserDao implements Dao<UserDto> {
 
     private final DbConnection dbConnection;
 
+    @Override
     public long save(UserDto userDto) throws SQLException {
         String query = String.format("INSERT INTO %s.USERS(name, surname, email, username, password) VALUES(?, ?, ?, ?, ?)",
                 SCHEMA);
@@ -33,7 +36,8 @@ public class UserDao {
         throw new RuntimeException("Could not get id of saved record.");
     }
 
-    public ResultSet get(long id) throws SQLException {
+    @Override
+    public UserDto get(long id) throws SQLException {
         String query = String.format("SELECT * FROM %s.USERS WHERE ID = ?", SCHEMA);
 
         PreparedStatement statement = dbConnection.createPreparedStatement(query);
@@ -41,9 +45,20 @@ public class UserDao {
 
         ResultSet resultSet = statement.executeQuery();
 
-        return resultSet.next() ? resultSet : null;
+        if (resultSet.next()) {
+            return UserDto.builder()
+                    .id(resultSet.getLong("id"))
+                    .name(resultSet.getString("name"))
+                    .surname(resultSet.getString("surname"))
+                    .email(resultSet.getString("email"))
+                    .username(resultSet.getString("username"))
+                    .password(resultSet.getString("password"))
+                    .build();
+        }
+        return null;
     }
 
+    @Override
     public void update(long id, UserDto userDto) throws SQLException {
         String query = String.format("UPDATE %s.USERS SET name = ?, surname = ? , email = ?, username = ?, password = ? WHERE ID = ?",
                 SCHEMA);
@@ -59,6 +74,7 @@ public class UserDao {
         statement.executeUpdate();
     }
 
+    @Override
     public void delete(long id) throws SQLException {
         String query = String.format("DELETE FROM %s.USERS WHERE ID = ?",
                 SCHEMA);

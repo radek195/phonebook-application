@@ -3,8 +3,8 @@ package integration
 import common.DataHelper
 import common.DbHelper
 import org.example.domain.user.UserDto
-import org.example.infrastructure.dao.DbConnection
-import org.example.infrastructure.dao.UserDao
+import org.example.infrastructure.DbConnection
+import org.example.infrastructure.user.UserDao
 import spock.lang.Specification
 
 class UserDaoIT extends Specification implements DataHelper {
@@ -42,11 +42,11 @@ class UserDaoIT extends Specification implements DataHelper {
             def retrievedUser = userDao.get(user.id())
 
         then:
-            retrievedUser.getString("name") == user.name()
-            retrievedUser.getString("surname") == user.surname()
-            retrievedUser.getString("email") == user.email()
-            retrievedUser.getString("username") == user.username()
-            retrievedUser.getString("password") == user.password()
+            retrievedUser.name() == user.name()
+            retrievedUser.surname() == user.surname()
+            retrievedUser.email() == user.email()
+            retrievedUser.username() == user.username()
+            retrievedUser.password() == user.password()
     }
 
     def "should update saved user"() {

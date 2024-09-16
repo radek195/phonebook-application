@@ -43,12 +43,12 @@ class DbHelper {
         sql.rows("SELECT * FROM ${schema}.CONTACTS WHERE ID = ${id}" as String)
     }
 
-    void insertContact(ContactDto contact, long userId) {
+    void insertContact(ContactDto contact) {
         sql.execute(
                 String.format("INSERT INTO %s.CONTACTS(id, users_id, name, surname, email, phone_number, description) VALUES(%s, %s, '%s', '%s', '%s', '%s', '%s')",
                         schema,
                         contact.id(),
-                        userId,
+                        contact.users_id(),
                         contact.name(),
                         contact.surname(),
                         contact.email(),
