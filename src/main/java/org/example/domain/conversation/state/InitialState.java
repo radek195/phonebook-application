@@ -25,7 +25,7 @@ public class InitialState extends State implements ConversationState {
     public ConversationState evaluateNewState(String answer) {
         return switch (answer) {
             case "L" -> throw new RuntimeException("Not implemented yet"); //TODO implement login state
-            case "E" -> throw new RuntimeException("Not implemented yet");  //TODO implement exit state
+            case "E" -> new ExitState();
             default -> {
                 System.out.println("Sorry I don't understand. Please try again");
                 yield new InitialState();
