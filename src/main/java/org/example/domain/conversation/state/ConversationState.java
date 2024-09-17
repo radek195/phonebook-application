@@ -1,9 +1,15 @@
 package org.example.domain.conversation.state;
 
-import org.example.domain.conversation.ConversationContext;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-public interface ConversationState {
+public abstract class ConversationState {
 
-    void handle(ConversationContext context);
+    protected Map<String, String> options = new LinkedHashMap<>();
 
+    protected abstract void setOptions();
+
+    protected abstract void displayQuestion();
+
+    protected abstract State evaluateNewState(String answer);
 }
