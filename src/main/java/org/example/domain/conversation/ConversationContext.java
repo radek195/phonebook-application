@@ -3,8 +3,8 @@ package org.example.domain.conversation;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.example.domain.conversation.state.ConversationState;
-import org.example.domain.conversation.state.InitialState;
+import org.example.domain.conversation.state.State;
+import org.example.domain.conversation.state.states.InitialState;
 import org.example.infrastructure.utils.ScannerUtil;
 
 @RequiredArgsConstructor
@@ -14,19 +14,17 @@ public class ConversationContext {
     public final ScannerUtil scanner;
 
 
-    @Setter private boolean isFinished;
-    @Setter private ConversationState state;
+    @Setter
+    private boolean isFinished;
+    @Setter
+    private State state;
 
     public void conversationLoop() {
         this.state = new InitialState();
 
         while (!isFinished) {
-            handleConversation();
+            this.state.handle(this);
         }
-    }
-
-    public void handleConversation() {
-        this.state.handle(this);
     }
 }
 

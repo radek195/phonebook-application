@@ -4,7 +4,7 @@ import org.example.domain.conversation.ConversationContext;
 import org.example.domain.conversation.state.ConversationState;
 import org.example.domain.conversation.state.State;
 
-public class InitialState extends State implements ConversationState {
+public class InitialState extends ConversationState implements State {
 
     public InitialState() {
         setOptions();
@@ -24,7 +24,7 @@ public class InitialState extends State implements ConversationState {
     }
 
     @Override
-    public ConversationState evaluateNewState(String answer) {
+    public State evaluateNewState(String answer) {
         return switch (answer) {
             case "L" -> throw new RuntimeException("Not implemented yet"); //TODO implement login state
             case "E" -> new ExitState();
