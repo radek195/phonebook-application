@@ -7,6 +7,11 @@ public class ExitState implements State {
 
     @Override
     public void handle(ConversationContext context) {
-        context.setFinished(true);
+        context.finishConversation();
+    }
+
+    @Override
+    public State evaluateNewState() {
+        return null;
     }
 }

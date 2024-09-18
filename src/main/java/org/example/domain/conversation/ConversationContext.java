@@ -1,30 +1,38 @@
 package org.example.domain.conversation;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.example.domain.conversation.state.State;
-import org.example.domain.conversation.state.states.InitialState;
 import org.example.infrastructure.utils.ScannerUtil;
 
-@RequiredArgsConstructor
+
 public class ConversationContext {
 
-    @Getter
-    public final ScannerUtil scanner;
-
-
-    @Setter
-    private boolean isFinished;
     @Setter
     private State state;
 
-    public void conversationLoop() {
-        this.state = new InitialState();
+    public final ScannerUtil scanner;
 
+    private boolean isFinished;
+    @Setter private long loggedInUserId;
+
+    public ConversationContext(State state, ScannerUtil scanner) {
+        this.state = state;
+        this.scanner = scanner;
+    }
+
+    public void conversationLoop() {
         while (!isFinished) {
             this.state.handle(this);
         }
     }
+
+    public String getClientInput() {
+        return this.scanner.getClientInput();
+    }
+
+    public void finishConversation() {
+        this.isFinished = true;
+    }
+
 }
 
