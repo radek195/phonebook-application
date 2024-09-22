@@ -1,13 +1,16 @@
 package org.example.domain.conversation.state.states;
 
-import org.example.domain.contact.ContactDto;
 import org.example.domain.conversation.ConversationContext;
 import org.example.domain.conversation.state.State;
 
-public class AddContactState implements State {
+public class AddContactState extends State {
+
+    public AddContactState(ConversationContext context) {
+        super(context);
+    }
 
     @Override
-    public void handle(ConversationContext context) {
+    public void handle() {
         System.out.println("Please provide");
         System.out.println("Name");
         String name = context.getClientInput();
@@ -20,21 +23,15 @@ public class AddContactState implements State {
         System.out.println("Description (optional)");
         String description = context.getClientInput();
 
-        ContactDto dto = ContactDto.builder()
-                .name(name)
-                .surname(surname)
-                .email(email)
-                .phoneNumber(phoneNumber)
-                .description(description)
-                .build();
+        //TODO
+        //save contact here
+        //set loggedInState if successful
 
-        //TODO save contact
-
-
+        context.setState(evaluateNewState(""));
     }
 
     @Override
-    public State evaluateNewState() {
-        return null;
+    public State evaluateNewState(String answer) {
+        return new FailedToAddContactState(context);
     }
 }

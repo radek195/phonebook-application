@@ -3,31 +3,32 @@ package org.example.domain.conversation.state.states;
 import org.example.domain.conversation.ConversationContext;
 import org.example.domain.conversation.state.State;
 
-public class LogInState implements State {
+public class LogInState extends State {
 
-    boolean correctCredentials;
+    public LogInState(ConversationContext context) {
+        super(context);
+    }
 
     @Override
-    public void handle(ConversationContext context) {
-        System.out.println("Please enter your username or type E to exit");
+    public void handle() {
+        System.out.println("Please enter your username:");
         String username = context.getClientInput();
 
         System.out.println("Please enter your password:");
         String password = context.getClientInput();
 
-        //TODO validate credentials and change user id
+//        TODO validate credentials and change user id
+//        if (correctCredentials) {
+//            context.setState(new LoggedInState());
+//        }
         context.setLoggedInUserId(1L);
-        context.setState(evaluateNewState());
+        context.setState(evaluateNewState(""));
     }
 
 
     @Override
-    public State evaluateNewState() {
-        if(correctCredentials) {
-            return new LoggedInState();
-        }
-
-        return new IncorrectCredentialsState();
+    public State evaluateNewState(String answer) {
+        return new IncorrectCredentialsState(context);
     }
 
 }

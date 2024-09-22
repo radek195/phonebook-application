@@ -1,10 +1,14 @@
 package org.example.domain.conversation.state;
 
+import lombok.RequiredArgsConstructor;
 import org.example.domain.conversation.ConversationContext;
 
-public interface State {
+@RequiredArgsConstructor
+public abstract class State {
 
-    void handle(ConversationContext context);
+    protected final ConversationContext context;
 
-    State evaluateNewState();
+    public abstract void handle();
+
+    protected abstract State evaluateNewState(String answer);
 }

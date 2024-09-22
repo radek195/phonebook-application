@@ -1,6 +1,8 @@
 package org.example.domain.conversation;
 
+import lombok.Getter;
 import lombok.Setter;
+import org.example.domain.contact.ContactDto;
 import org.example.domain.conversation.state.State;
 import org.example.infrastructure.utils.ScannerUtil;
 
@@ -13,7 +15,11 @@ public class ConversationContext {
     public final ScannerUtil scanner;
 
     private boolean isFinished;
-    @Setter private long loggedInUserId;
+    @Setter
+    private Long loggedInUserId;
+    @Getter
+    @Setter
+    private ContactDto existingContact;
 
     public ConversationContext(State state, ScannerUtil scanner) {
         this.state = state;
@@ -22,7 +28,7 @@ public class ConversationContext {
 
     public void conversationLoop() {
         while (!isFinished) {
-            this.state.handle(this);
+            this.state.handle();
         }
     }
 
