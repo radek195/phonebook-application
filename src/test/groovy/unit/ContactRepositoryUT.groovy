@@ -54,7 +54,7 @@ class ContactRepositoryUT extends Specification implements DataHelper {
             retrievedContact.description() == contact.description()
     }
 
-    def  "Should throw runtime exception when updating contact failed"() {
+    def "Should throw runtime exception when updating contact failed"() {
         given:
             def contact = getContactOneFor(1)
             contactDao.update(contact.id(), contact) >> new SQLException()
@@ -66,7 +66,7 @@ class ContactRepositoryUT extends Specification implements DataHelper {
             thrown(RuntimeException)
     }
 
-    def  "Should throw runtime exception when deleding contact failed"() {
+    def "Should throw runtime exception when deleding contact failed"() {
         given:
 
             contactDao.delete(18) >> new SQLException()
