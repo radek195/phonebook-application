@@ -6,6 +6,7 @@ import org.example.domain.user.UserDto;
 import org.example.infrastructure.Dao;
 
 import java.sql.SQLException;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class UserRepository implements Repository<UserDto> {
@@ -22,7 +23,7 @@ public class UserRepository implements Repository<UserDto> {
     }
 
     @Override
-    public UserDto get(long id) {
+    public Optional<UserDto> get(long id) {
         try {
             return userDao.get(id);
         } catch (SQLException e) {

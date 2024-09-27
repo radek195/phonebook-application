@@ -39,7 +39,7 @@ class UserDaoIT extends Specification implements DataHelper {
             dbHelper.insertUser(user)
 
         when:
-            def retrievedUser = userDao.get(user.id())
+            def retrievedUser = userDao.get(user.id()).get()
 
         then:
             retrievedUser.name() == user.name()

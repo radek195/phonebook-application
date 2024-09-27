@@ -43,10 +43,10 @@ class UserRepositoryUT extends Specification implements DataHelper {
     def "Should return correct contact when getting contact"() {
         given:
             def user = getUserOne()
-            userDao.get(162) >> user
+            userDao.get(162) >> Optional.of(user)
 
         expect:
-            def retrievedUser = userRepository.get(162)
+            def retrievedUser = userRepository.get(162).get()
             retrievedUser == user
             retrievedUser.id() == user.id()
             retrievedUser.name() == user.name()

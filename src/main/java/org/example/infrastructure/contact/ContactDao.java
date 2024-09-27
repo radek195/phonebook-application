@@ -8,6 +8,7 @@ import org.example.infrastructure.DbConnection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 import static org.example.infrastructure.DbConnection.SCHEMA;
 
@@ -38,26 +39,14 @@ public class ContactDao implements Dao<ContactDto> {
     }
 
     @Override
-    public ContactDto get(long id) throws SQLException {
+    public Optional<ContactDto> get(long id) throws SQLException {
         String query = String.format("SELECT * FROM %s.CONTACTS WHERE ID = ?", SCHEMA);
 
         PreparedStatement statement = dbConnection.createPreparedStatement(query);
         statement.setLong(1, id);
+        ResultSet rs = statement.executeQuery();
 
-        ResultSet resultSet = statement.executeQuery();
-
-        if (resultSet.next()) {
-            return ContactDto.builder()
-                    .id(resultSet.getLong("id"))
-                    .users_id(resultSet.getLong("users_id"))
-                    .name(resultSet.getString("name"))
-                    .surname(resultSet.getString("surname"))
-                    .email(resultSet.getString("email"))
-                    .phoneNumber(resultSet.getString("phone_number"))
-                    .description(resultSet.getString("description"))
-                    .build();
-        }
-        return null;
+        return Optional.ofNullable(rs.next() ? ContactDto.from(rs) : null);
     }
 
     @Override

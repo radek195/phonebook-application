@@ -8,6 +8,7 @@ import org.example.infrastructure.DbConnection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 import static org.example.infrastructure.DbConnection.SCHEMA;
 
@@ -37,25 +38,14 @@ public class UserDao implements Dao<UserDto> {
     }
 
     @Override
-    public UserDto get(long id) throws SQLException {
+    public Optional<UserDto> get(long id) throws SQLException {
         String query = String.format("SELECT * FROM %s.USERS WHERE ID = ?", SCHEMA);
 
         PreparedStatement statement = dbConnection.createPreparedStatement(query);
         statement.setLong(1, id);
 
-        ResultSet resultSet = statement.executeQuery();
-
-        if (resultSet.next()) {
-            return UserDto.builder()
-                    .id(resultSet.getLong("id"))
-                    .name(resultSet.getString("name"))
-                    .surname(resultSet.getString("surname"))
-                    .email(resultSet.getString("email"))
-                    .username(resultSet.getString("username"))
-                    .password(resultSet.getString("password"))
-                    .build();
-        }
-        return null;
+        ResultSet rs = statement.executeQuery();
+        return Optional.ofNullable(rs.next() ? UserDto.from(rs) : null);
     }
 
     @Override
