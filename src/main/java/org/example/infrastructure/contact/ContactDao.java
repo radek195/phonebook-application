@@ -8,6 +8,8 @@ import org.example.infrastructure.DbConnection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.example.infrastructure.DbConnection.SCHEMA;
@@ -74,5 +76,22 @@ public class ContactDao implements Dao<ContactDto> {
         statement.setLong(1, id);
 
         statement.executeUpdate();
+    }
+
+    @Override
+    public List<ContactDto> getAllForUser(long userId) throws SQLException {
+        String query = String.format("SELECT * FROM %s.CONTACTS WHERE USERS_ID = ?", SCHEMA);
+
+        PreparedStatement statement = dbConnection.createPreparedStatement(query);
+        statement.setLong(1, userId);
+        ResultSet rs = statement.executeQuery();
+
+        List<ContactDto> contactList = new ArrayList<>();
+
+        while (rs.next()) {
+            contactList.add(ContactDto.from(rs));
+        }
+
+        return contactList;
     }
 }

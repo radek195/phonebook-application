@@ -6,6 +6,7 @@ import org.example.domain.contact.ContactDto;
 import org.example.infrastructure.Dao;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -46,6 +47,15 @@ public class ContactRepository implements Repository<ContactDto> {
             contactDao.delete(id);
         } catch (SQLException e) {
             throw new RuntimeException("Could not delete contact with id: " + id);
+        }
+    }
+
+    @Override
+    public List<ContactDto> getAllForUser(long id) {
+        try {
+            return contactDao.getAllForUser(id);
+        } catch (SQLException e) {
+            throw new RuntimeException("Could retrieve contacts");
         }
     }
 }
