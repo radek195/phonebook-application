@@ -42,10 +42,10 @@ class ContactRepositoryUT extends Specification implements DataHelper {
     def "Should return correct contact when getting contact"() {
         given:
             def contact = getContactOneFor(1)
-            contactDao.get(1) >> contact
+            contactDao.get(1) >> Optional.of(contact)
 
         expect:
-            def retrievedContact = contactRepository.get(1)
+            def retrievedContact = contactRepository.get(1).get()
             retrievedContact.users_id() == contact.users_id()
             retrievedContact.name() == contact.name()
             retrievedContact.surname() == contact.surname()
@@ -54,7 +54,7 @@ class ContactRepositoryUT extends Specification implements DataHelper {
             retrievedContact.description() == contact.description()
     }
 
-    def  "Should throw runtime exception when updating contact failed"() {
+    def "Should throw runtime exception when updating contact failed"() {
         given:
             def contact = getContactOneFor(1)
             contactDao.update(contact.id(), contact) >> new SQLException()
@@ -66,7 +66,7 @@ class ContactRepositoryUT extends Specification implements DataHelper {
             thrown(RuntimeException)
     }
 
-    def  "Should throw runtime exception when deleding contact failed"() {
+    def "Should throw runtime exception when deleding contact failed"() {
         given:
 
             contactDao.delete(18) >> new SQLException()

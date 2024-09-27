@@ -48,7 +48,7 @@ class ContactDaoIT extends Specification implements DataHelper {
             dbHelper.insertContact(contact)
 
         when:
-            def retrievedContact = contactDao.get(contact.id())
+            def retrievedContact = contactDao.get(contact.id()).get()
 
         then:
             retrievedContact.users_id() == contact.users_id()

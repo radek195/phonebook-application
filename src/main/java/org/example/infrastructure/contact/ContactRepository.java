@@ -6,6 +6,7 @@ import org.example.domain.contact.ContactDto;
 import org.example.infrastructure.Dao;
 
 import java.sql.SQLException;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class ContactRepository implements Repository<ContactDto> {
@@ -22,7 +23,7 @@ public class ContactRepository implements Repository<ContactDto> {
     }
 
     @Override
-    public ContactDto get(long id) {
+    public Optional<ContactDto> get(long id) {
         try {
             return contactDao.get(id);
         } catch (SQLException e) {
