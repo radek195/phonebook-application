@@ -35,6 +35,7 @@ public class AddContactState extends State {
         if (id == null) {
             System.out.println("Could not add contact");
             context.setState(new FailedToAddContactState(context));
+            return;
         }
 
         context.setState(new LoggedInState(context));

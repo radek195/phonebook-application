@@ -20,6 +20,7 @@ public class LogInState extends State {
         boolean correctCredentials = context.validateUserCredentials(username, password);
         if (correctCredentials) {
             context.setState(new LoggedInState(context));
+            return;
         }
 
         context.setState(evaluateNewState(""));

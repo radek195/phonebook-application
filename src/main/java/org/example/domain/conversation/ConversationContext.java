@@ -1,5 +1,6 @@
 package org.example.domain.conversation;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.example.domain.contact.ContactDto;
@@ -19,6 +20,7 @@ public class ConversationContext {
     public final ContactService contactService;
 
     @Setter
+    @Getter
     private State state;
 
     public boolean isFinished;
