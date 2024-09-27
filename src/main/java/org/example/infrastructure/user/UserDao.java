@@ -8,6 +8,7 @@ import org.example.infrastructure.DbConnection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 import static org.example.infrastructure.DbConnection.SCHEMA;
@@ -73,5 +74,10 @@ public class UserDao implements Dao<UserDto> {
         statement.setLong(1, id);
 
         statement.executeUpdate();
+    }
+
+    @Override
+    public List<UserDto> getAllForUser(long userId) {
+        throw new RuntimeException("Not implemented");
     }
 }

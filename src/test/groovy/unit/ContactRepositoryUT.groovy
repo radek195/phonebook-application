@@ -2,6 +2,7 @@ package unit
 
 import common.DataHelper
 import org.example.domain.Repository
+import org.example.domain.contact.ContactDto
 import org.example.infrastructure.Dao
 import org.example.infrastructure.contact.ContactRepository
 import spock.lang.Specification
@@ -68,7 +69,6 @@ class ContactRepositoryUT extends Specification implements DataHelper {
 
     def "Should throw runtime exception when deleding contact failed"() {
         given:
-
             contactDao.delete(18) >> new SQLException()
 
         when:
@@ -76,5 +76,18 @@ class ContactRepositoryUT extends Specification implements DataHelper {
 
         then:
             thrown(RuntimeException)
+    }
+
+    def "Should return list of contacts"() {
+        given:
+            def list = List.of(getContactOneFor(1), getContactTwoFor(1))
+            contactDao.getAllForUser(1) >> list
+
+        when:
+            List<ContactDto> contactList = contactRepository.getAllForUser(1)
+
+        then:
+            contactList.size() == list.size()
+
     }
 }

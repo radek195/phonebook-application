@@ -81,7 +81,7 @@ class ContactDaoIT extends Specification implements DataHelper {
             retrievedContact.get("description") == contactUpdated.description()
     }
 
-    def "should delete saved user"() {
+    def "should delete saved contact"() {
         given:
             UserDto user = getUserOne()
             ContactDto contact = getContactOneFor(user.id())
@@ -96,5 +96,22 @@ class ContactDaoIT extends Specification implements DataHelper {
             def actualContact = dbHelper.selectFromContactsById(contact.id())
             actualContact.size() == 0
 
+    }
+
+    def "should retrieve saved contacts"() {
+        given:
+            UserDto user = getUserOne()
+            ContactDto contact = getContactOneFor(user.id())
+            ContactDto contact2 = getContactTwoFor(user.id())
+
+            dbHelper.insertUser(user)
+            dbHelper.insertContact(contact)
+            dbHelper.insertContact(contact2)
+
+        when:
+            def retrievedContacts = contactDao.getAllForUser(user.id())
+
+        then:
+            retrievedContacts.size() == 2
     }
 }

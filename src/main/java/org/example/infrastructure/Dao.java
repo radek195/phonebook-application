@@ -1,6 +1,7 @@
 package org.example.infrastructure;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 public interface Dao<T> {
@@ -11,4 +12,6 @@ public interface Dao<T> {
     void update(long id, T dto) throws SQLException;
 
     void delete(long id) throws SQLException;
+
+    List<T> getAllForUser(long userId) throws SQLException;
 }
