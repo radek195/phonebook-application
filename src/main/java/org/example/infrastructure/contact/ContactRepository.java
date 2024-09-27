@@ -33,9 +33,10 @@ public class ContactRepository implements Repository<ContactDto> {
     }
 
     @Override
-    public void update(long id, ContactDto dto) {
+    public Long update(long id, ContactDto dto) {
         try {
             contactDao.update(id, dto);
+            return id;
         } catch (SQLException e) {
             throw new RuntimeException("Could not update contact with id: " + id);
         }

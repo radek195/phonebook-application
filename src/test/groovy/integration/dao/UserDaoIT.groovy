@@ -1,4 +1,4 @@
-package integration
+package integration.dao
 
 import common.DataHelper
 import common.DbHelper
