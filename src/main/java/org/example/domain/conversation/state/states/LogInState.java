@@ -17,14 +17,13 @@ public class LogInState extends State {
         System.out.println("Please enter your password:");
         String password = context.getClientInput();
 
-//        TODO validate credentials and change user id
-//        if (correctCredentials) {
-//            context.setState(new LoggedInState());
-//        }
-        context.setLoggedInUserId(1L);
+        boolean correctCredentials = context.validateUserCredentials(username, password);
+        if (correctCredentials) {
+            context.setState(new LoggedInState(context));
+        }
+
         context.setState(evaluateNewState(""));
     }
-
 
     @Override
     public State evaluateNewState(String answer) {

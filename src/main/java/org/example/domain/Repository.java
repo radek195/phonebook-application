@@ -10,7 +10,7 @@ public interface Repository<T> {
 
     Optional<T> get(long id);
 
-    void update(long id, T dto);
+    Long update(long id, T dto);
 
     void delete(long id);
 

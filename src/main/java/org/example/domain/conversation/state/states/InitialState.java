@@ -11,7 +11,7 @@ public class InitialState extends State {
 
     @Override
     public void handle() {
-        context.setLoggedInUserId(null);
+        context.loggedInUserId = null;
         System.out.println("What would you like to do?");
         System.out.println("R - Register, L - Log in, E - Exit");
 

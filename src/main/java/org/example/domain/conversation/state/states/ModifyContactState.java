@@ -12,7 +12,7 @@ public class ModifyContactState extends State {
 
     @Override
     public void handle() {
-        ContactDto existing = context.getExistingContact();
+        ContactDto existing = context.existingContact;
         System.out.println("Please provide values to amend (or skip)");
         System.out.println("name:");
         String name = context.getClientInput();
@@ -32,7 +32,12 @@ public class ModifyContactState extends State {
                 .description(determineValue(description, existing.description()))
                 .build();
 
-//        TODO update contact
+        Long id = context.updateContact(dto);
+
+        if (id == null) {
+            System.out.println("Could not modify contact");
+        }
+        context.setState(new ViewContactsState(context));
     }
 
     @Override

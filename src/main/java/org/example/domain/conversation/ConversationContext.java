@@ -1,30 +1,29 @@
 package org.example.domain.conversation;
 
-import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.example.domain.contact.ContactDto;
+import org.example.domain.contact.ContactService;
 import org.example.domain.conversation.state.State;
+import org.example.domain.user.UserService;
 import org.example.infrastructure.utils.ScannerUtil;
 
+import java.util.List;
+import java.util.Optional;
 
+@RequiredArgsConstructor
 public class ConversationContext {
+
+    public final ScannerUtil scanner;
+    public final UserService userService;
+    public final ContactService contactService;
 
     @Setter
     private State state;
 
-    public final ScannerUtil scanner;
-
-    private boolean isFinished;
-    @Setter
-    private Long loggedInUserId;
-    @Getter
-    @Setter
-    private ContactDto existingContact;
-
-    public ConversationContext(State state, ScannerUtil scanner) {
-        this.state = state;
-        this.scanner = scanner;
-    }
+    public boolean isFinished;
+    public Long loggedInUserId;
+    public ContactDto existingContact;
 
     public void conversationLoop() {
         while (!isFinished) {
@@ -40,5 +39,25 @@ public class ConversationContext {
         this.isFinished = true;
     }
 
+    public boolean validateUserCredentials(String username, String password) {
+        Optional<Long> userId = userService.validateUserCredentials(username, password);
+        if (userId.isPresent()) {
+            loggedInUserId = userId.get();
+            return true;
+        }
+        return false;
+    }
+
+    public List<ContactDto> getContactList() {
+        return contactService.getAllContactsForUser(loggedInUserId);
+    }
+
+    public Long updateContact(ContactDto contact) {
+        return contactService.updateContact(contact, existingContact.id());
+    }
+
+    public Long saveContact(ContactDto contact) {
+        return contactService.saveContact(contact);
+    }
 }
 

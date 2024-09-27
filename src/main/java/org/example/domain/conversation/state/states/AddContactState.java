@@ -1,5 +1,6 @@
 package org.example.domain.conversation.state.states;
 
+import org.example.domain.contact.ContactDto;
 import org.example.domain.conversation.ConversationContext;
 import org.example.domain.conversation.state.State;
 
@@ -23,15 +24,24 @@ public class AddContactState extends State {
         System.out.println("Description (optional)");
         String description = context.getClientInput();
 
-        //TODO
-        //save contact here
-        //set loggedInState if successful
+        Long id = context.saveContact(ContactDto.builder()
+                .name(name)
+                .surname(surname)
+                .email(email)
+                .phoneNumber(phoneNumber)
+                .description(description)
+                .build());
 
-        context.setState(evaluateNewState(""));
+        if (id == null) {
+            System.out.println("Could not add contact");
+            context.setState(new FailedToAddContactState(context));
+        }
+
+        context.setState(new LoggedInState(context));
     }
 
     @Override
     public State evaluateNewState(String answer) {
-        return new FailedToAddContactState(context);
+        return null;
     }
 }

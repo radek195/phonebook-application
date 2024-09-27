@@ -33,9 +33,10 @@ public class UserRepository implements Repository<UserDto> {
     }
 
     @Override
-    public void update(long id, UserDto dto) {
+    public Long update(long id, UserDto dto) {
         try {
             userDao.update(id, dto);
+            return id;
         } catch (SQLException e) {
             throw new RuntimeException("Could not update user with id: " + id);
         }
@@ -51,7 +52,7 @@ public class UserRepository implements Repository<UserDto> {
     }
 
     @Override
-    public List<UserDto> getAllForUser(long id) throws SQLException {
+    public List<UserDto> getAllForUser(long id) {
         throw new RuntimeException("Not implemented yet");
     }
 }
