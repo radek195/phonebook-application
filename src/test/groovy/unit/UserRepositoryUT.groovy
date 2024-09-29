@@ -1,10 +1,9 @@
 package unit
 
 import common.DataHelper
-import org.example.domain.Repository
-import org.example.infrastructure.Dao
-import org.example.infrastructure.contact.ContactRepository
-import org.example.infrastructure.user.UserRepository
+import org.example.domain.repository.UserRepository
+import org.example.infrastructure.user.UserDao
+import org.example.infrastructure.user.UserRepositoryImpl
 import spock.lang.Specification
 import spock.lang.Subject
 
@@ -12,10 +11,10 @@ import java.sql.SQLException
 
 class UserRepositoryUT extends Specification implements DataHelper {
 
-    Dao userDao = Stub()
+    UserDao userDao = Stub()
 
     @Subject
-    Repository userRepository = new UserRepository(userDao)
+    UserRepository userRepository = new UserRepositoryImpl(userDao)
 
     def "Should return correct id when saving contact"() {
         given:
@@ -56,7 +55,7 @@ class UserRepositoryUT extends Specification implements DataHelper {
             retrievedUser.password() == user.password()
     }
 
-    def  "Should throw runtime exception when updating contact failed"() {
+    def "Should throw runtime exception when updating contact failed"() {
         given:
             def user = getUserOne()
             userDao.update(user.id(), user) >> new SQLException()
@@ -68,7 +67,7 @@ class UserRepositoryUT extends Specification implements DataHelper {
             thrown(RuntimeException)
     }
 
-    def  "Should throw runtime exception when deleding contact failed"() {
+    def "Should throw runtime exception when deleding contact failed"() {
         given:
             userDao.delete(18) >> new SQLException()
 
@@ -77,5 +76,15 @@ class UserRepositoryUT extends Specification implements DataHelper {
 
         then:
             thrown(RuntimeException)
+    }
+
+    def "should return id for username and password"() {
+        given:
+            def expectedId = 11L
+            userDao.getIdForUsernameAndPassword("perrym", "M4th1a5") >> Optional.of(expectedId)
+
+        expect:
+            def retrievedUserId = userRepository.getIdForUsernameAndPassword("perrym", "M4th1a5").get()
+            retrievedUserId == 112
     }
 }

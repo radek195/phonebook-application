@@ -4,16 +4,16 @@ import common.DataHelper
 import common.DbHelper
 import org.example.domain.contact.ContactDto
 import org.example.domain.user.UserDto
-import org.example.infrastructure.contact.ContactDao
+import org.example.infrastructure.contact.ContactDaoImpl
 import org.example.infrastructure.DbConnection
 import spock.lang.Specification
 
-class ContactDaoIT extends Specification implements DataHelper {
+class ContactDaoImplIT extends Specification implements DataHelper {
 
     DbHelper dbHelper = new DbHelper()
 
     DbConnection dbConnection = new DbConnection()
-    ContactDao contactDao = new ContactDao(dbConnection)
+    ContactDaoImpl contactDao = new ContactDaoImpl(dbConnection)
 
     def setup() {
         dbHelper.cleanupTables()

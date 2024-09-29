@@ -1,18 +1,16 @@
 package org.example.infrastructure.user;
 
 import lombok.RequiredArgsConstructor;
-import org.example.domain.Repository;
+import org.example.domain.repository.UserRepository;
 import org.example.domain.user.UserDto;
-import org.example.infrastructure.Dao;
 
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-public class UserRepository implements Repository<UserDto> {
+public class UserRepositoryImpl implements UserRepository {
 
-    private final Dao<UserDto> userDao;
+    private final UserDao userDao;
 
     @Override
     public long save(UserDto dto) {
@@ -52,7 +50,11 @@ public class UserRepository implements Repository<UserDto> {
     }
 
     @Override
-    public List<UserDto> getAllForUser(long id) {
-        throw new RuntimeException("Not implemented yet");
+    public Optional<Long> getIdForUsernameAndPassword(String username, String password) {
+        try {
+            return userDao.getIdForUsernameAndPassword(username, password);
+        } catch (Exception e) {
+            throw new RuntimeException("Could not find id.");
+        }
     }
 }

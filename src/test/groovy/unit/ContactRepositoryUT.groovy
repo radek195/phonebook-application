@@ -1,10 +1,10 @@
 package unit
 
 import common.DataHelper
-import org.example.domain.Repository
 import org.example.domain.contact.ContactDto
-import org.example.infrastructure.Dao
-import org.example.infrastructure.contact.ContactRepository
+import org.example.domain.repository.ContactRepository
+import org.example.infrastructure.contact.ContactDao
+import org.example.infrastructure.contact.ContactRepositoryImpl
 import spock.lang.Specification
 import spock.lang.Subject
 
@@ -12,10 +12,10 @@ import java.sql.SQLException
 
 class ContactRepositoryUT extends Specification implements DataHelper {
 
-    Dao contactDao = Stub()
+    ContactDao contactDao = Stub()
 
     @Subject
-    Repository contactRepository = new ContactRepository(contactDao)
+    ContactRepository contactRepository = new ContactRepositoryImpl(contactDao)
 
     def "Should return correct id when saving contact"() {
         given:

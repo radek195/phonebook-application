@@ -4,15 +4,15 @@ import common.DataHelper
 import common.DbHelper
 import org.example.domain.user.UserDto
 import org.example.infrastructure.DbConnection
-import org.example.infrastructure.user.UserDao
+import org.example.infrastructure.user.UserDaoImpl
 import spock.lang.Specification
 
-class UserDaoIT extends Specification implements DataHelper {
+class UserDaoImplIT extends Specification implements DataHelper {
 
     DbHelper dbHelper = new DbHelper()
 
     DbConnection dbConnection = new DbConnection()
-    UserDao userDao = new UserDao(dbConnection)
+    UserDaoImpl userDao = new UserDaoImpl(dbConnection)
 
     def setup() {
         dbHelper.cleanupTables()
@@ -80,6 +80,18 @@ class UserDaoIT extends Specification implements DataHelper {
         then:
             def actualUser = dbHelper.selectFromUsersById(existingUser.id())
             actualUser.size() == 0
-
     }
+
+    def "should return user id for username and password"() {
+        given:
+            UserDto user = getUserOne()
+            dbHelper.insertUser(user)
+
+        when:
+            def retrievedUserId = userDao.getIdForUsernameAndPassword("perrym", "M4th1a5").get()
+
+        then:
+            retrievedUserId == 1
+    }
+
 }

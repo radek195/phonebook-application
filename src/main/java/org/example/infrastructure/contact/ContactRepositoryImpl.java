@@ -1,18 +1,17 @@
 package org.example.infrastructure.contact;
 
 import lombok.RequiredArgsConstructor;
-import org.example.domain.Repository;
 import org.example.domain.contact.ContactDto;
-import org.example.infrastructure.Dao;
+import org.example.domain.repository.ContactRepository;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-public class ContactRepository implements Repository<ContactDto> {
+public class ContactRepositoryImpl implements ContactRepository {
 
-    private final Dao<ContactDto> contactDao;
+    private final ContactDao contactDao;
 
     @Override
     public long save(ContactDto dto) {
