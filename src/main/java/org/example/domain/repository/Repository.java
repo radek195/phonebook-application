@@ -1,7 +1,5 @@
-package org.example.domain;
+package org.example.domain.repository;
 
-import java.sql.SQLException;
-import java.util.List;
 import java.util.Optional;
 
 public interface Repository<T> {
@@ -14,5 +12,4 @@ public interface Repository<T> {
 
     void delete(long id);
 
-    List<T> getAllForUser(long id) throws SQLException;
 }
