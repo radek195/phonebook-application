@@ -7,7 +7,7 @@ import java.util.Scanner;
 @RequiredArgsConstructor
 public class ScannerUtil {
 
-    Scanner scanner;
+    public final Scanner scanner;
 
     public String getClientInput() {
         return scanner.nextLine();
