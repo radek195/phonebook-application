@@ -7,10 +7,10 @@ import org.example.domain.contact.ContactDto;
 import org.example.domain.contact.ContactService;
 import org.example.domain.conversation.state.State;
 import org.example.domain.user.UserService;
+import org.example.infrastructure.user.IncorrectCredentialsException;
 import org.example.infrastructure.utils.ScannerUtil;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 public class ConversationContext {
@@ -42,12 +42,13 @@ public class ConversationContext {
     }
 
     public boolean validateUserCredentials(String username, String password) {
-        Optional<Long> userId = userService.validateUserCredentials(username, password);
-        if (userId.isPresent()) {
-            loggedInUserId = userId.get();
+        try {
+            loggedInUserId = userService.validateUserCredentials(username, password);
             return true;
+        } catch (IncorrectCredentialsException e) {
+            System.out.println("Username or password incorrect.");
+            return false;
         }
-        return false;
     }
 
     public List<ContactDto> getContactList() {
