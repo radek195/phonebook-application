@@ -14,11 +14,11 @@ public class ContactRepositoryImpl implements ContactRepository {
     private final ContactDao contactDao;
 
     @Override
-    public long save(ContactDto dto) {
+    public Long save(ContactDto dto) {
         try {
             return contactDao.save(dto);
         } catch (SQLException e) {
-            throw new RuntimeException("Could not save contact: " + dto);
+            throw new RuntimeException("Could not save contact: " + dto + e);
         }
     }
 

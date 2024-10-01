@@ -3,26 +3,23 @@ package org.example.domain.conversation.state.states;
 import org.example.domain.conversation.ConversationContext;
 import org.example.domain.conversation.state.State;
 
-public class InitialState extends State {
-
-    public InitialState(ConversationContext context) {
+public class ExistingUserState extends State {
+    public ExistingUserState(ConversationContext context) {
         super(context);
     }
 
     @Override
     public void handle() {
-        context.loggedInUserId = null;
-        System.out.println("What would you like to do?");
-        System.out.println("R - Register, L - Log in, E - Exit");
-
+        System.out.println("Username taken.");
+        System.out.println("T - Try again, H - Home, E - Exit");
         context.setState(evaluateNewState(context.getClientInput()));
     }
 
     @Override
-    public State evaluateNewState(String answer) {
+    protected State evaluateNewState(String answer) {
         return switch (answer) {
-            case "R" -> new RegisterState(context);
-            case "L" -> new LogInState(context);
+            case "T" -> new RegisterState(context);
+            case "H" -> new InitialState(context);
             case "E" -> new ExitState(context);
             default -> {
                 System.out.println("Sorry I don't understand. Please try again");

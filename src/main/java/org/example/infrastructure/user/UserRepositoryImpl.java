@@ -13,11 +13,11 @@ public class UserRepositoryImpl implements UserRepository {
     private final UserDao userDao;
 
     @Override
-    public long save(UserDto dto) {
+    public Long save(UserDto dto) throws ExistingUsernameException {
         try {
             return userDao.save(dto);
         } catch (SQLException e) {
-            throw new RuntimeException("Could not insert user: " + dto);
+            throw new ExistingUsernameException();
         }
     }
 

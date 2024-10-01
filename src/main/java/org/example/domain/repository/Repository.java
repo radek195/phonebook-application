@@ -1,10 +1,12 @@
 package org.example.domain.repository;
 
+import org.example.infrastructure.user.ExistingUsernameException;
+
 import java.util.Optional;
 
 public interface Repository<T> {
 
-    long save(T dto);
+    Long save(T dto) throws ExistingUsernameException;
 
     Optional<T> get(long id);
 
