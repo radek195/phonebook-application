@@ -2,6 +2,7 @@ package org.example.domain.contact;
 
 import lombok.RequiredArgsConstructor;
 import org.example.domain.repository.ContactRepository;
+import org.example.infrastructure.user.ExistingUsernameException;
 
 import java.util.List;
 
@@ -30,7 +31,11 @@ public interface ContactService {
 
         @Override
         public Long saveContact(ContactDto contact) {
-            return contactRepository.save(contact);
+            try {
+                return contactRepository.save(contact);
+            } catch (ExistingUsernameException e) {
+                return null;
+            }
         }
     }
 }

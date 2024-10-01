@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.example.domain.contact.ContactDto;
 import org.example.domain.contact.ContactService;
 import org.example.domain.conversation.state.State;
+import org.example.domain.user.UserDto;
 import org.example.domain.user.UserService;
 import org.example.infrastructure.user.IncorrectCredentialsException;
 import org.example.infrastructure.utils.ScannerUtil;
@@ -34,7 +35,9 @@ public class ConversationContext {
     }
 
     public String getClientInput() {
-        return this.scanner.getClientInput();
+        String input = this.scanner.getClientInput();
+
+        return input.isEmpty() ? " " : input;
     }
 
     public void finishConversation() {
@@ -60,7 +63,11 @@ public class ConversationContext {
     }
 
     public Long saveContact(ContactDto contact) {
-        return contactService.saveContact(contact);
+        return contactService.saveContact(ContactDto.userIdDecorator(contact, loggedInUserId));
+    }
+
+    public boolean registerNewUser(UserDto userDto) {
+        return userService.registerNewUser(userDto);
     }
 }
 
